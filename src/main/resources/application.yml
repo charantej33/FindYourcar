@@ -1,0 +1,49 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-stacktrace: never
+    include-exception: false
+
+spring:
+  application:
+    name: carfinder
+  
+  mvc:
+    throw-exception-if-no-handler-found: true
+  
+  web:
+    resources:
+      add-mappings: false
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:carfinder_db}
+    username: ${DB_USER:carfinder}
+    password: ${DB_PASSWORD:carfinder123}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+
+# OpenRouter AI API Configuration
+openrouter:
+  api-key: ${OPENROUTER_API_KEY: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}
+  model: google/gemini-2.0-flash-001
+  max-tokens: 2048
+  base-url: https://openrouter.ai/api/v1
+
+# CORS Configuration
+app:
+  cors:
+    allowed-origins: http://localhost:5173,http://localhost:3000,http://frontend:5173

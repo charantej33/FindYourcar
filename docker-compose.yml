@@ -1,0 +1,78 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: carfinder-postgres
+    environment:
+      POSTGRES_DB: carfinder_db
+      POSTGRES_USER: carfinder
+      POSTGRES_PASSWORD: carfinder123
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U carfinder -d carfinder_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - carfinder-network
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: carfinder-backend
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: carfinder_db
+      DB_USER: carfinder
+      DB_PASSWORD: carfinder123
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - carfinder-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/cars"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: carfinder-frontend
+    environment:
+      VITE_API_URL: http://backend:8080
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - carfinder-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5173"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  carfinder-network:
+    driver: bridge

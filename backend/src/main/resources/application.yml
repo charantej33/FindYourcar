@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
   error:
     include-message: always
     include-stacktrace: never
@@ -8,23 +8,23 @@ server:
 spring:
   application:
     name: carfinder
-  
+
   mvc:
     throw-exception-if-no-handler-found: true
-  
+
   web:
     resources:
       add-mappings: false
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:carfinder_db}
-    username: ${DB_USER:carfinder}
-    password: ${DB_PASSWORD:carfinder123}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/carfinder_db}
+    username: ${PGUSER:carfinder}
+    password: ${PGPASSWORD:carfinder123}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
@@ -36,14 +36,11 @@ spring:
     init:
       mode: always
 
-# # OpenRouter AI API Configuration
-# openrouter:
-#   api-key: ${OPENROUTER_API_KEY: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}
-#   model: google/gemini-2.0-flash-001
-#   max-tokens: 2048
-#   base-url: https://openrouter.ai/api/v1
+# Anthropic AI Configuration
+anthropic:
+  api-key: ${ANTHROPIC_API_KEY:your_api_key_here}
 
 # CORS Configuration
 app:
   cors:
-    allowed-origins: http://localhost:5173,http://localhost:3000,http://frontend:5173
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://frontend:5173}

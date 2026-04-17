@@ -86,7 +86,6 @@ carfinder/
 
 ### Prerequisites
 - Docker & Docker Compose installed
-- OpenRouter API key (get free: https://openrouter.ai)
 
 ### 1. Clone & Navigate
 ```bash

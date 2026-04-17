@@ -21,20 +21,15 @@ WORKDIR /app
 # Copy the built JAR from builder stage
 COPY --from=builder /app/build/libs/*.jar app.jar
 
-# Set environment variables
-ENV OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-ENV DB_HOST=postgres
-ENV DB_PORT=5432
-ENV DB_NAME=carfinder_db
-ENV DB_USER=carfinder
-ENV DB_PASSWORD=carfinder123
+# Environment variables
+ENV ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+ENV DATABASE_URL=${DATABASE_URL}
+ENV PGUSER=${PGUSER}
+ENV PGPASSWORD=${PGPASSWORD}
+ENV ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
 
 # Expose port
 EXPOSE 8080
-
-# Health check
-HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 \
-  CMD java -cp app.jar org.springframework.boot.loader.JarLauncher &>/dev/null || exit 1
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]

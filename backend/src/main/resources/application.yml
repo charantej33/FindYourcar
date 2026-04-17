@@ -36,12 +36,12 @@ spring:
     init:
       mode: always
 
-# OpenRouter AI API Configuration
-openrouter:
-  api-key: ${OPENROUTER_API_KEY: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}
-  model: google/gemini-2.0-flash-001
-  max-tokens: 2048
-  base-url: https://openrouter.ai/api/v1
+# # OpenRouter AI API Configuration
+# openrouter:
+#   api-key: ${OPENROUTER_API_KEY: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}
+#   model: google/gemini-2.0-flash-001
+#   max-tokens: 2048
+#   base-url: https://openrouter.ai/api/v1
 
 # CORS Configuration
 app:

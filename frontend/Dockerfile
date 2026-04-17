@@ -16,6 +16,8 @@ COPY src/ ./src/
 COPY index.html ./
 
 # Build the application
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
 # Production stage - serve with a simple HTTP server

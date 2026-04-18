@@ -32,6 +32,7 @@ services:
       DB_NAME: carfinder_db
       DB_USER: carfinder
       DB_PASSWORD: carfinder123
+      DATABASE_URL: jdbc:postgresql://postgres:5432/carfinder_db
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"

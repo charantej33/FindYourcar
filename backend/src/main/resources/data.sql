@@ -1,6 +1,8 @@
 -- CarFinder: Seed data — Cars organized by company
 -- Prices in Lakhs (₹), Safety ratings out of 5
 
+DELETE FROM cars;
+
 INSERT INTO cars (name, brand, price, fuel_type, use_case, mileage, safety_rating, pros, image_url) VALUES
 
 -- ===========================

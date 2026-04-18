@@ -105,6 +105,7 @@ export default function QuizPage({ onBack }) {
       const data = await response.json();
       console.log('Recommendations:', data);
       setResults(data.recommendations || []);
+      setIsLoading(false);
     } catch (err) {
       console.error('Error fetching recommendations:', err);
       setError(err.message || 'Failed to get recommendations. Please try again.');

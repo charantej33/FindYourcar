@@ -2,12 +2,12 @@ export default function CarCard({ car }) {
   return (
     <div className="car-card">
       <div className="car-card-image-wrapper">
-        <img 
-          src={car.imageUrl} 
+        <img
+          src={car.imageUrl}
           alt={`${car.brand} ${car.name}`}
           className="car-card-image"
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x250?text=' + encodeURIComponent(car.brand + ' ' + car.name);
+            e.target.src = 'https://placehold.co/400x250?text=' + encodeURIComponent(car.brand + ' ' + car.name);
           }}
         />
       </div>

@@ -46,4 +46,4 @@ anthropic:
 # CORS Configuration
 app:
   cors:
-    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://frontend:5173}
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,https://findyourcar.onrender.com}
